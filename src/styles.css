@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+ @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* Permet de bolquer le titre en haut
+ .fixed-header {
+     position: fixed;
+     top: 0;
+     left: 0;
+     z-index: 2;
+     width: 100%  !important;
+     background-color: #1976D2;
+ }
+*/
+
+ .header {
+
+   width: 100%  !important;
+   background-color: #1976D2;
+
+ }
+/*
+ .premierform {
+  margin-top: 70px;
+ }
+*/
+ .TitreCard{
+background-color: #1976D2;
+
+ }
+
+ 
