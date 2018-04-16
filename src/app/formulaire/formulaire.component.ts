@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 
+import * as writtenNumber from 'written-number';
 
 
 
@@ -27,6 +28,53 @@ constructor(private httpClient: HttpClient) { }
   }
 
   date = new Date();
+  annee = writtenNumber(this.date.getFullYear(), { lang: 'fr'});
+  mois = this.translate_mois(this.date.getMonth());
+  jour = writtenNumber(this.date.getDay(), { lang: 'fr'});
+  heure = writtenNumber(this.date.getHours(), { lang: 'fr'});
+  minutes = writtenNumber(this.date.getMinutes(), { lang: 'fr'});
+
+  translate_mois(mois) {
+    switch(mois){
+      case 0:
+        return "Janvier";
+
+      case 1:
+        return "Février";
+
+      case 2:
+        return "Mars";
+
+      case 3:
+        return "Avril";
+
+      case 4:
+        return "Mai";
+
+      case 5:
+        return "Juin";
+
+      case 6:
+        return "Juillet";
+
+      case 7:
+        return "Août";
+
+      case 8:
+        return "Septembre";
+
+      case 9:
+        return "Octobre";
+
+      case 10:
+        return "Novembre";
+
+      case 11:
+        return "Décembre";
+
+    }
+  }
+
   erreur_envoi : string;
 
   policiers :Policier[] = [
@@ -42,6 +90,8 @@ constructor(private httpClient: HttpClient) { }
 
 
 envoi(apercu_pvblanc) {
+
+
 
 console.log(this.prenom_policier);
 
@@ -104,6 +154,8 @@ if(this.prenom_policier == '' && this.nom_policier == '' && this.prenom_interpel
 
     this.reset_policier();
     //this.tri_policiers();
+
+    console.log(writtenNumber(1234785645, { lang: 'fr' })); // => 'mille deux cent trente-quatre'
 
   }
 

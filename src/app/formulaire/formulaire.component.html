@@ -191,6 +191,7 @@
     </mat-form-field>
   </p>
 
+
   <p>
     <mat-form-field >
      <input matInput placeholder="Téléphone" type="tel" [(ngModel)]="tel_interpel">
@@ -285,8 +286,8 @@
 
 
 
-              <p>L'an  deux mille {{date | date: 'yyyy'}},</p>
-              <p>Le {{ date | date: 'dd/MM'}} à {{ date | date: 'H'}} heures et {{ date | date: 'mm'}} minutes</p>
+              <p>L'an {{ annee }},</p>
+              <p>Le {{jour + " " + mois}} à {{heure}} heures et {{minutes}} minutes</p>
 
               <p>Nous,</p>
 
@@ -347,5 +348,5 @@
 <p style="color:red;font-weight:bold;font-size : 1.3em;font-family:arial">{{ erreur_envoi }}</p>
 
 <p>
-<button color="primary" mat-raised-button type="button" (click)="envoi(apercu_pvblanc, prenom_policier, nom_policier, nom_interpel, prenom_interpel, tel_interpel, adresse_interpel)">Envoyer</button>
+<button color="primary" mat-raised-button type="button" (click)="envoi(apercu_pvblanc)">Envoyer</button>
 </p>
