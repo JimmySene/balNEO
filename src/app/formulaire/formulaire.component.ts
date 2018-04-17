@@ -12,7 +12,6 @@ import 'rxjs/add/observable/interval';
 import * as writtenNumber from 'written-number';
 
 
-
 @Injectable()
 @Component({
   selector: 'app-formulaire',
@@ -33,6 +32,10 @@ constructor(private httpClient: HttpClient) { }
   jour = writtenNumber(this.date.getDay(), { lang: 'fr'});
   heure = writtenNumber(this.date.getHours(), { lang: 'fr'});
   minutes = writtenNumber(this.date.getMinutes(), { lang: 'fr'});
+
+  translate_heure(heure) {
+    return writtenNumber(heure, {lang: 'fr'});
+  }
 
   translate_mois(mois) {
     switch(mois){

@@ -62,9 +62,11 @@
       </mat-select>
 </mat-form-field>
 
-<mat-form-field >
- <input type="time" matInput placeholder="Heure"  [(ngModel)]="appel.heure">
+<mat-form-field>
+    <input matInput placeholder="Heure"  [(ngModel)]="appel.heure" [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4">
+    <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
 </mat-form-field>
+
 
 
 
@@ -98,8 +100,9 @@
 
 
   <p>
-    <mat-form-field >
-     <input matInput placeholder="Heure d'interpellation" type="time" [(ngModel)]="surplace.heure">
+    <mat-form-field>
+        <input matInput placeholder="Heure"  [(ngModel)]="surplace.heure" [owlDateTimeTrigger]="dt5" [owlDateTime]="dt5">
+        <owl-date-time [pickerType]="'timer'" #dt5></owl-date-time>
     </mat-form-field>
   </p>
 
@@ -310,12 +313,12 @@
                       <span *ngSwitchCase="'Ronde'">Nous observons lors d'une ronde</span>
 
 
-                </span> à {{appel.heure}} {{ appel.heure | date: 'H' }}:{{ appel.heure | date:'mm' }} pour {{ appel.nb_baigneurs }} <span *ngIf="appel.nb_baigneurs == 1; else condition_baigneurs1">baigneur</span> <ng-template #condition_baigneurs1><span>baigneurs</span></ng-template> en Seine à {{appel.lieu | titlecase}}.</p>
+                </span> à {{ this.translate_heure(appel.heure | date: 'H') }} heures {{ this.translate_heure(appel.heure | date:'mm') }} minutes pour {{ appel.nb_baigneurs }} <span *ngIf="appel.nb_baigneurs == 1; else condition_baigneurs1">baigneur</span> <ng-template #condition_baigneurs1><span>baigneurs</span></ng-template> en Seine à {{appel.lieu | titlecase}}.</p>
 
 
               <p>Revêtus de nos tenues d’uniformes réglementaires et insignes apparents à notre fonction.</p>
               <p>Nous transportons sur place à bord de la vedette « {{appel.nom_vedette | uppercase }} »<br />
-                 où étant à {{ surplace.heure | date: 'HH' }} heures {{ surplace.heure | date: 'mm' }} minutes à {{surplace.lieu}}, <br />
+                 où étant à {{ this.translate_heure(surplace.heure | date: 'HH') }} heures {{ this.translate_heure(surplace.heure | date: 'mm') }} minutes à {{surplace.lieu}}, <br />
                  sommes en présence de {{surplace.nb_baigneurs}} <span *ngIf="surplace.nb_baigneurs == 1; else condition_baigneurs3">individu mouillé</span> <ng-template #condition_baigneurs3><span>individus mouillés</span></ng-template> .</p>
 
 

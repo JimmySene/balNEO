@@ -23,6 +23,9 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatDividerModule} from '@angular/material/divider';
 import { MAT_DATE_LOCALE } from '@angular/material';
 
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+
 
 @NgModule({
   declarations: [
@@ -44,10 +47,13 @@ import { MAT_DATE_LOCALE } from '@angular/material';
      MatCardModule,
      MatSelectModule,
      MatRadioModule,
-     MatDividerModule
+     MatDividerModule,
+     OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   providers: [
       {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
+      {provide: OWL_DATE_TIME_LOCALE, useValue: 'fr'},
   ],
   bootstrap: [AppComponent]
 })
