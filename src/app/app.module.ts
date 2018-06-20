@@ -21,6 +21,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatCheckboxModule} from '@angular/material/checkbox'
 import { MAT_DATE_LOCALE } from '@angular/material';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
@@ -48,6 +49,7 @@ import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
      MatSelectModule,
      MatRadioModule,
      MatDividerModule,
+     MatCheckboxModule,
      OwlDateTimeModule,
     OwlNativeDateTimeModule
   ],

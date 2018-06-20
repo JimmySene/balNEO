@@ -6,10 +6,12 @@
 
   <div *ngFor="let policier of policiers ; index as i">
     <p>
+      <span *ngIf="policier.redacteur" style="color: red; font-weight: bold">Rédacteur du pv</span> <br />
       Policier {{ i + 1 }}:<br />
       Nom: {{policier.nom}} <br />
       Prénom: {{policier.prenom}}<br />
-      Grade: {{policier.grade | slice:2:20}}<br />
+      Grade: {{policier.grade | slice:2:30}}<br />
+
       <button color="primary" mat-raised-button (click)="modifier_policier(i)">Modifier</button> <button color="primary" mat-raised-button  (click)="supprimer_policier(i)" >Supprimer</button>
     </p>
   </div>
@@ -30,8 +32,8 @@
   <mat-form-field>
   <mat-select placeholder="Grade" [(ngModel)]="grade_policier">
     <mat-option value="7 GPX">GPX</mat-option>
-    <mat-option value="6 Bier">Bier</mat-option>
-    <mat-option value="5 Bier Chef">Bier Chef</mat-option>
+    <mat-option value="6 Brigadier de Police">Brigadier</mat-option>
+    <mat-option value="5 Brigadier Chef de Police">Brigadier Chef</mat-option>
     <mat-option value="4 Major">Major</mat-option>
     <mat-option value="3 Lieutenant">Lieutenant</mat-option>
     <mat-option value="2 Capitaine">Capitaine</mat-option>
@@ -39,6 +41,11 @@
   </mat-select>
 </mat-form-field>
   </p>
+<p>
+  <mat-checkbox [(ngModel)]="redacteur_policier">Rédacteur du PV</mat-checkbox>
+</p>
+
+
 
 
   <button color="primary" mat-raised-button (click)="ajouter_policier(targetPolicier)">Ajouter à l'équipage</button>
@@ -74,7 +81,7 @@
 
   <p>
     <mat-form-field >
-     <input matInput placeholder="Lieu" type="text" [(ngModel)]="appel.lieu">
+     <input matInput placeholder="Lieu" type="text" [(ngModel)]="appel.lieu" >
     </mat-form-field>
   </p>
 
@@ -261,7 +268,8 @@
 
 
 <div >
-  <table #apercu_pvblanc border="1" cellpadding="10">
+  
+  <table #apercu_pvblanc border="1" cellpadding="10" style="display:none">
 
 
           <tr>
@@ -281,7 +289,7 @@
               <p><b>REPUBLIQUE FRANCAISE<br />MINISTERE DE L'INTERIEUR</b></p>
               <p><b>DIRECTION GENERALE<br /> DE LA POLICE NATIONALE</b></p>
               <hr width="50%"/>
-              <p><b>S.D.U.S.S.O-S.U.O-Brigade Fluviale</b></p>
+              <p><b>S.D.S.O-Brigade Fluviale</b></p>
               <hr width="50%"/>
               <p>PV : {{ date | date: 'yyyy'}} / __ / 001</p>
             </td>
@@ -290,59 +298,83 @@
 
 
 
-              <p>L'an {{ annee }},</p>
-              <p>Le {{jour + " " + mois}} à {{heure}} heures et {{minutes}} minutes</p>
+              <p>L'an {{ annee }},<br />
+              Le {{jour + " " + mois}} à {{ this.translate_heure(surplace.heure | date: 'HH') }} heures {{ this.translate_heure(surplace.heure | date: 'mm') }} minutes</p>
 
-              <p>Nous,</p>
-
-
-              <div *ngFor="let policier of policiers | orderBy : 'grade' ; index as i">
-                <p *ngIf="i == 1">Assisté du:</p>
-              <p> <span *ngIf="i>0"> -</span> {{ policier.grade | slice:2:20 }} - {{ policier.nom | uppercase}} {{ policier.prenom | titlecase}}</p></div>
-
-              <p>Gardien de la paix en fonction à la brigade fluviale de PARIS</p>
-
-              <p>Agent de Police Judiciaire en résidence à PARIS</p>
-              <p>Étant au service</p>
-              <p>Agissant conformément aux instructions reçues de Mme XXXXXXX XXXXXXX, Commandant de Police, Officier de Police Judiciaire territorialement compétent, Chef du Service de la Brigade Fluviale de Paris.</p>
-
-              <p>   <span [ngSwitch]="appel.appelant">
-                      <span *ngSwitchCase="'TNF'">Sommes requis par notre station directrice « TNF »</span>
-                      <span *ngSwitchCase="'Requérant'"> Un requérant nous informes </span>
-                      <span *ngSwitchCase="'Pompiers'">Sommes contacté par les pompiers</span>
-                      <span *ngSwitchCase="'VHF'">Sommes requis par notre radio « VHF »</span>
-                      <span *ngSwitchCase="'Ronde'">Nous observons lors d'une ronde</span>
-
-
-                </span> à {{ this.translate_heure(appel.heure | date: 'H') }} heures {{ this.translate_heure(appel.heure | date:'mm') }} minutes pour {{ appel.nb_baigneurs }} <span *ngIf="appel.nb_baigneurs == 1; else condition_baigneurs1">baigneur</span> <ng-template #condition_baigneurs1><span>baigneurs</span></ng-template> en Seine à {{appel.lieu | titlecase}}.</p>
-
-
-              <p>Revêtus de nos tenues d’uniformes réglementaires et insignes apparents à notre fonction.</p>
-              <p>Nous transportons sur place à bord de la vedette « {{appel.nom_vedette | uppercase }} »<br />
-                 où étant à {{ this.translate_heure(surplace.heure | date: 'HH') }} heures {{ this.translate_heure(surplace.heure | date: 'mm') }} minutes à {{surplace.lieu}}, <br />
-                 sommes en présence de {{surplace.nb_baigneurs}} <span *ngIf="surplace.nb_baigneurs == 1; else condition_baigneurs3">individu mouillé</span> <ng-template #condition_baigneurs3><span>individus mouillés</span></ng-template> .</p>
+              <p>Nous,
+                <span *ngFor="let policier of policiers">
+                  <span *ngIf="policier.redacteur">
+                    {{ policier.nom | uppercase}} {{ policier.prenom | titlecase}} <br /> {{ policier.grade | slice:2:30 }} <br /> en fonction à la brigade fluviale de PARIS
+                </span>
+              </span>
+            </p>
 
 
 
-                 <p>{{surplace.infos_complementaires}}</p>
+
+              <p>---Agent de Police Judiciaire en résidence à PARIS.---<br />
+              ---Agissant conformément aux instructions reçues de Mme BERJOT Sandrine, Commandant de Police, Officier de Police Judiciaire territorialement compétent, Chef du Service de la Brigade Fluviale de Paris.---<br />
+              ---<span [ngSwitch]="appel.appelant"><span *ngSwitchCase="'TNF'">Sommes requis par notre station directrice « TNF »</span><span *ngSwitchCase="'Requérant'">Un requérant nous informes </span><span *ngSwitchCase="'Pompiers'">Sommes contacté par les pompiers</span><span *ngSwitchCase="'VHF'">Sommes requis par notre radio « VHF »</span><span *ngSwitchCase="'Ronde'">Nous observons lors d'une ronde</span>
+
+
+                </span> à {{ this.translate_heure(appel.heure | date: 'H') }} heures {{ this.translate_heure(appel.heure | date:'mm') }} minutes pour {{ appel.nb_baigneurs }} <span *ngIf="appel.nb_baigneurs == 1; else condition_baigneurs1">baigneur</span> <ng-template #condition_baigneurs1><span>baigneurs</span></ng-template> en Seine à {{appel.lieu | titlecase}}.---<br />
+                ---Assisté du :
+                    <span *ngFor="let policier of policiers; index as i">
+                      <span *ngIf="!policier.redacteur">
+                        {{ policier.grade | slice:2:30 }} {{ policier.nom | uppercase}} {{ policier.prenom | titlecase}},
+                      </span>
+                    </span>
+              .---<br />
+              ---Revêtus de nos tenues d’uniformes réglementaires et insignes apparents à notre fonction.---<br />
+              ---Nous transportons sur place à bord de la vedette « {{appel.nom_vedette | uppercase }} » où étant à {{ this.translate_heure(surplace.heure | date: 'HH') }} heures {{ this.translate_heure(surplace.heure | date: 'mm') }} minutes à {{surplace.lieu}}, sommes en présence de {{surplace.nb_baigneurs}} <span *ngIf="surplace.nb_baigneurs == 1; else condition_baigneurs3">individu mouillé</span> <ng-template #condition_baigneurs3><span>individus mouillés</span></ng-template>.---<br />
+              <span *ngIf= "surplace.infos_complementaires != '' ">---{{surplace.infos_complementaires}}--- <br /></span>
       <!--        <p>Mettons pied à terre et prenons contact avec   <span *ngIf="surplace.nb_baigneurs == 1; else condition_baigneurs2">l'individu qui nous déclare s'être jeté</span> <ng-template #condition_baigneurs2> <span> les individus qui nous déclarent s'être jetés</span></ng-template> à l’eau volontairement.</p>
               <p>Palpé, <span *ngIf="surplace.nb_baigneurs == 1; else condition_baigneurs4">l'individu n'est porteur d’aucun objet dangereux pour lui ou pour autrui</span> <ng-template #condition_baigneurs4> <span> les individus ne sont trouvés porteur d’aucun objet dangereux pour eux ou pour autrui</span></ng-template>.</p> -->
 
-              <div *ngFor="let interpel of interpels; index as i">
-                <p>
-                  Le {{i+1}}<span *ngIf="i+1 == 1">er</span><span *ngIf="i+1 > 1">eme</span> individus nous  <span [ngSwitch]="interpel.type_doc">
+              <span *ngFor="let interpel of interpels; index as i">
+
+                  ---Le {{i+1}}<span *ngIf="i+1 == 1">er</span><span *ngIf="i+1 > 1">eme</span> individus nous  <span [ngSwitch]="interpel.type_doc">
                           <span *ngSwitchCase="'carte identite'">présente sa carte d'identité supportant sa photographie de numéro {{ interpel.num_doc }}</span>
                           <span *ngSwitchCase="'passeport'">présente son passeport supportant sa photographie de numéro {{ interpel.num_doc }}</span>
                           <span *ngSwitchCase="'permis'">présente son permis supportant sa photographie de numéro {{ interpel.num_doc }}</span>
                           <span *ngSwitchCase="'carte vitale'">présente sa carte vitale supportant sa photographie de numéro {{ interpel.num_doc }}</span>
                           <span *ngSwitchCase="'identité verbale'">donne son identité verbalement</span>
 
-                    </span> supportant sa photographie au nom de {{interpel.nom | uppercase}} {{interpel.prenom | titlecase}} né le {{interpel.date_naissance | date: 'dd/MM/yyyy'}} à {{interpel.lieu_naissance | titlecase}} demeurant {{interpel.adresse}}, {{interpel.ville | titlecase}} {{interpel.code_postal}} Téléphone: {{interpel.tel}} <span *ngIf="interpel.recherche == 'true'">L'individu est recherché : {{interpel.infos_recherche}}</span><br />
-                </p>
-                <p>Relevons à l'encontre de {{interpel.nom | uppercase}} {{interpel.prenom | titlecase}} l'infraction  suivante: Baignade interdite en seine,</p>
-                <p>Prévue par l’ordonnance du préfet de Police du 17 avril 1923 et réprimée par l’article R610-5 du Code Pénal, contravention de classe 1, Natinf 6032.</p>
-              </div>
+                    </span> au nom de {{interpel.nom | uppercase}} {{interpel.prenom | titlecase}} né le {{interpel.date_naissance | date: 'dd/MM/yyyy'}} à {{interpel.lieu_naissance | titlecase}} demeurant {{interpel.adresse}}, {{interpel.ville | titlecase}} {{interpel.code_postal}} Téléphone: {{interpel.tel}} <span *ngIf="interpel.recherche == 'true'">L'individu est recherché : {{interpel.infos_recherche}}</span>
+              .---<br />
+              ---Relevons à l'encontre de {{interpel.nom | uppercase}} {{interpel.prenom | titlecase}} l'infraction  suivante: Baignade interdite en seine.---<br />
+              ---Prévue par l’ordonnance du préfet de Police du 17 avril 1923 et réprimée par l’article R610-5 du Code Pénal, contravention de classe 1, Natinf 6032.---<br />
 
+              </span>
+
+<span style="margin-right:250px;">LES ASSISTANTS</span>
+
+<span *ngFor="let policier of policiers">
+  <span *ngIf="policier.redacteur">
+    LE {{ policier.grade | slice:2:30 | uppercase}}
+</span>
+</span> <br /> <br /> <br /> <br />
+
+              ---de meme suite.---
+              <span *ngFor="let interpel of interpels; index as i">
+                <br />
+                ---Mentionons que Monsieur {{interpel.nom | uppercase}} {{interpel.prenom | titlecase}} né le {{interpel.date_naissance | date: 'dd/MM/yyyy'}} à {{interpel.lieu_naissance | titlecase}}  <div *ngIf="interpel.recherche == 'true';then rechercheblockoui; else rechercheblocknon"></div>
+              <ng-template #rechercheblockoui>
+                est recherché {{interpel.infos_recherche}}.---
+              </ng-template>
+
+              <ng-template #rechercheblocknon>
+                ne fais a ce jour l'objet d'aucune recherche au fichier des Personnes Recherchées.---
+              </ng-template>
+
+            </span> <br />
+                ---Dont acte.--- <br />
+
+                <span *ngFor="let policier of policiers">
+                  <span style="margin-left:380px;" *ngIf="policier.redacteur">
+                  LE {{ policier.grade | slice:2:30 | uppercase}}
+                </span>
+                </span> <br /> <br /> <br /><br />
 
             </td>
           </tr>
