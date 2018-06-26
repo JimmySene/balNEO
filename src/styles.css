@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
  @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+ @import "~ng-pick-datetime/assets/style/picker.min.css";
 
 /* Permet de bolquer le titre en haut
  .fixed-header {
@@ -27,5 +28,3 @@
 background-color: #1976D2;
 
  }
-
- 

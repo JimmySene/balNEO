@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 
-
+import * as writtenNumber from 'written-number';
 
 
 @Injectable()
@@ -27,6 +27,57 @@ constructor(private httpClient: HttpClient) { }
   }
 
   date = new Date();
+  annee = writtenNumber(this.date.getFullYear(), { lang: 'fr'});
+  mois = this.translate_mois(this.date.getMonth());
+  jour = writtenNumber(this.date.getDay(), { lang: 'fr'});
+  heure = writtenNumber(this.date.getHours(), { lang: 'fr'});
+  minutes = writtenNumber(this.date.getMinutes(), { lang: 'fr'});
+
+  translate_heure(heure) {
+    return writtenNumber(heure, {lang: 'fr'});
+  }
+
+  translate_mois(mois) {
+    switch(mois){
+      case 0:
+        return "Janvier";
+
+      case 1:
+        return "Février";
+
+      case 2:
+        return "Mars";
+
+      case 3:
+        return "Avril";
+
+      case 4:
+        return "Mai";
+
+      case 5:
+        return "Juin";
+
+      case 6:
+        return "Juillet";
+
+      case 7:
+        return "Août";
+
+      case 8:
+        return "Septembre";
+
+      case 9:
+        return "Octobre";
+
+      case 10:
+        return "Novembre";
+
+      case 11:
+        return "Décembre";
+
+    }
+  }
+
   erreur_envoi : string;
 
   policiers :Policier[] = [
@@ -36,12 +87,15 @@ constructor(private httpClient: HttpClient) { }
   nom_policier :string = "";
   prenom_policier :string = "";
   grade_policier :string = "GPX";
+  redacteur_policier :boolean = false;
 
   id_pv:any;
 
 
 
 envoi(apercu_pvblanc) {
+
+
 
 console.log(this.prenom_policier);
 
@@ -50,14 +104,18 @@ if(this.prenom_policier != '' || this.nom_policier != '' )
   this.erreur_envoi = " Envoi annulé: Un champs dans la rubrique [Equipage] n'as pas était enregistré. Veuillez vider le champs ou appuyez sur le bouton [Ajouter Policier]";
 
 }
-if(this.prenom_interpel != '' || this.nom_interpel != '' || this.tel_interpel != '' || this.adresse_interpel != '')
+else if(this.prenom_interpel != '' || this.nom_interpel != '' || this.tel_interpel != '' || this.adresse_interpel != '')
 {
   this.erreur_envoi = " Envoi annulé: Un champs dans la rubrique [Individu controlé] n'as pas était enregistré. Veuillez vider le champs ou appuyez sur le bouton [Ajouter l'individu]";
 }
-
-
-if(this.prenom_policier == '' && this.nom_policier == '' && this.prenom_interpel == '' && this.nom_interpel == '' && this.tel_interpel == '' && this.adresse_interpel == '')
+else if(this.appel.heure == '' || this.appel.lieu == '' || this.appel.nb_baigneurs == null || this.appel.nom_vedette == '' )
 {
+  this.erreur_envoi = " Envoi annulé: Un champs de la catégorie APPEL n'est pas remplie";
+}
+else if(this.surplace.heure == '' || this.surplace.lieu== '' || this.surplace.nb_baigneurs== null )
+{
+  this.erreur_envoi = " Envoi annulé: Un champs de la catégorie SUR PLACE n'est pas remplie";
+}else {
  let plainte_id: string;
   let full_appercu = '<html><head><meat charset="UTF-8" /></head><body><table border="1" cellpadding="10">' + apercu_pvblanc.innerHTML + '</table></body></html>';
  this.httpClient
@@ -99,11 +157,14 @@ if(this.prenom_policier == '' && this.nom_policier == '' && this.prenom_interpel
     this.policiers.push({
       nom: this.nom_policier,
       prenom: this.prenom_policier,
-      grade: this.grade_policier
+      grade: this.grade_policier,
+      redacteur: this.redacteur_policier
     });
 
     this.reset_policier();
     //this.tri_policiers();
+
+    console.log(writtenNumber(1234785645, { lang: 'fr' })); // => 'mille deux cent trente-quatre'
 
   }
 
@@ -118,6 +179,7 @@ if(this.prenom_policier == '' && this.nom_policier == '' && this.prenom_interpel
     this.nom_policier = this.policiers[id_policier].nom;
     this.prenom_policier = this.policiers[id_policier].prenom;
     this.grade_policier = this.policiers[id_policier].grade;
+    this.redacteur_policier = this.policiers[id_policier].redacteur;
 
     this.supprimer_policier(id_policier);
   }
@@ -127,6 +189,7 @@ if(this.prenom_policier == '' && this.nom_policier == '' && this.prenom_interpel
     this.nom_policier = "";
     this.prenom_policier = "";
     this.grade_policier = "GPX";
+    this.redacteur_policier = false;
   }
 
   appel :Appel = {
