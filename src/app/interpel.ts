@@ -9,6 +9,7 @@ export class Interpel {
   adresse :string;
   ville :string;
   code_postal :string;
+  profession :string;
   recherche : string;
   infos_recherche :string;
 }

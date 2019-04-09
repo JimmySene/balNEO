@@ -3,4 +3,5 @@ export class Policier {
   prenom :string;
   grade :string;
   redacteur :boolean;
+  fonction: string;
 }
