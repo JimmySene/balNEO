@@ -11,3 +11,7 @@
   font-weight:bold;
   font-family : helvetica;
 }
+
+#appercu{
+  display : none;
+}
