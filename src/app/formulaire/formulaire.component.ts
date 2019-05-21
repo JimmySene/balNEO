@@ -118,6 +118,7 @@ export class FormulaireComponent implements OnInit {
   recherche_interpel :string;
   infos_recherche :string;
 
+  autre_nom_vedette :string = '';
   id_pv : any;
   erreurs_envoi : string[] = [];
 
@@ -139,16 +140,20 @@ export class FormulaireComponent implements OnInit {
     }
     if(this.appel.heure == '' || this.appel.lieu == '' || this.appel.nb_baigneurs == null || this.appel.nom_vedette == '' )
     {
-      this.erreurs_envoi.push(" Envoi annulé : Un champs de la catégorie APPEL n'a pas été rempli. Veuillez le remplir.");
+      this.erreurs_envoi.push(" Envoi annulé : Un champ de la catégorie APPEL n'a pas été rempli. Veuillez le remplir.");
     }
     if(this.surplace.heure == '' || this.surplace.lieu== '' || this.surplace.nb_baigneurs== null )
     {
-      this.erreurs_envoi.push(" Envoi annulé : Un champs de la catégorie SUR PLACE n'a pas été rempli. Veuillez le remplir.");
+      this.erreurs_envoi.push(" Envoi annulé : Un champ de la catégorie SUR PLACE n'a pas été rempli. Veuillez le remplir.");
+    }
+    if(this.appel.nom_vedette == 'Autre' && this.autre_nom_vedette == '')
+    {
+      this.erreurs_envoi.push("Envoi annulé : Le nom de la vedette n'a pas été renseigné.");
     }
     if(this.erreurs_envoi.length == 0)
     {
       let plainte_id : string;
-      let full_appercu = '<html><head><meat charset="UTF-8" /></head><body><table border="1" cellpadding="10">' + apercu_pvblanc.innerHTML + '</table></body></html>';
+      let full_appercu = '<html><head><meta charset="UTF-8" /><title>PV BLANC</title></head><body><table border="1" cellpadding="10">' + apercu_pvblanc.innerHTML + '</table></body></html>';
       this.httpClient
       .put('http://plf.poc.plf-sso.ppol.minint.fr/plaintes',full_appercu, {responseType: 'text'})
       .subscribe(

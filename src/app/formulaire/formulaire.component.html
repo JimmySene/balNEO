@@ -89,8 +89,25 @@
     </p>
 
     <p>
-      <mat-form-field >
-        <input matInput placeholder="Lieu" type="text" [(ngModel)]="appel.lieu" >
+      <mat-form-field>
+        <mat-select placeholder="Lieu" [(ngModel)]="appel.lieu">
+          <mat-option value="PARIS">PARIS</mat-option>
+          <mat-option value="Clichy">Clichy</mat-option>
+          <mat-option value="Colombes">Colombes</mat-option>
+          <mat-option value="Courbevoie">Courbevoie</mat-option>
+          <mat-option value="Epinay-sur-Seine">Epinay-sur-Seine</mat-option>
+          <mat-option value="Gennevilliers">Gennevilliers</mat-option>
+          <mat-option value="Issy-les-Moulineaux">Issy-les-Moulineaux</mat-option>
+          <mat-option value="Levallois-Perret">Levallois-Perret</mat-option>
+          <mat-option value="L’Ile-Saint-Denis">L’Ile-Saint-Denis</mat-option>
+          <mat-option value="Nanterre">Nanterre</mat-option>
+          <mat-option value="Neuilly-sur-Seine">Neuilly-sur-Seine</mat-option>
+          <mat-option value="Puteaux">Puteaux </mat-option>
+          <mat-option value="Saint-Denis">Saint-Denis</mat-option>
+          <mat-option value="Saint-Ouen">Saint-Ouen</mat-option>
+          <mat-option value="Suresnes">Suresnes</mat-option>
+          <mat-option value="Villeneuve-la-Garenne">Villeneuve-la-Garenne</mat-option>
+        </mat-select>
       </mat-form-field>
     </p>
 
@@ -101,8 +118,32 @@
     </p>
 
     <p>
-      <mat-form-field >
-        <input matInput placeholder="Nom de la vedette" type="text" [(ngModel)]="appel.nom_vedette">
+      <mat-form-field>
+        <mat-select placeholder="Nom de la vedette" [(ngModel)]="appel.nom_vedette">
+
+          <mat-option value="Alsace">Alsace</mat-option>
+          <mat-option value="Annexe IDF">Annexe IDF</mat-option>
+          <mat-option value="Arès">Arès</mat-option>
+          <mat-option value="Bourgogne">Bourgogne</mat-option>
+          <mat-option value="Circé">Circé</mat-option>
+          <mat-option value="Cronos">Cronos</mat-option>
+          <mat-option value="Héraclès">Héraclès</mat-option>
+          <mat-option value="Hermès">Hermès</mat-option>
+          <mat-option value="Île de France">Île de France</mat-option>
+          <mat-option value="Morvan">Morvan</mat-option>
+          <mat-option value="Secours I">Secours I </mat-option>
+          <mat-option value="Secours IV">Secours IV</mat-option>
+          <mat-option value="Secours V">Secours V</mat-option>
+          <mat-option value="Thémis">Thémis</mat-option>
+          <mat-option value="Thor">Thor</mat-option>
+          <mat-option value="Autre">Autre</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+
+    <p *ngIf="appel.nom_vedette == 'Autre'">
+      <mat-form-field>
+        <input matInput placeholder="Précisez son nom (vedette)" type="text" [(ngModel)]="autre_nom_vedette">
       </mat-form-field>
     </p>
 
@@ -123,8 +164,25 @@
     </p>
 
     <p>
-      <mat-form-field >
-        <input matInput placeholder="Lieu d'interpellation" type="text" [(ngModel)]="surplace.lieu">
+      <mat-form-field>
+        <mat-select placeholder="Lieu d'interpellation" [(ngModel)]="surplace.lieu">
+          <mat-option value="PARIS">PARIS</mat-option>
+          <mat-option value="Clichy">Clichy</mat-option>
+          <mat-option value="Colombes">Colombes</mat-option>
+          <mat-option value="Courbevoie">Courbevoie</mat-option>
+          <mat-option value="Epinay-sur-Seine">Epinay-sur-Seine</mat-option>
+          <mat-option value="Gennevilliers">Gennevilliers</mat-option>
+          <mat-option value="Issy-les-Moulineaux">Issy-les-Moulineaux</mat-option>
+          <mat-option value="Levallois-Perret">Levallois-Perret</mat-option>
+          <mat-option value="L’Ile-Saint-Denis">L’Ile-Saint-Denis</mat-option>
+          <mat-option value="Nanterre">Nanterre</mat-option>
+          <mat-option value="Neuilly-sur-Seine">Neuilly-sur-Seine</mat-option>
+          <mat-option value="Puteaux">Puteaux </mat-option>
+          <mat-option value="Saint-Denis">Saint-Denis</mat-option>
+          <mat-option value="Saint-Ouen">Saint-Ouen</mat-option>
+          <mat-option value="Suresnes">Suresnes</mat-option>
+          <mat-option value="Villeneuve-la-Garenne">Villeneuve-la-Garenne</mat-option>
+        </mat-select>
       </mat-form-field>
     </p>
 
@@ -269,12 +327,9 @@
   <mat-card-title >Informations circonstancielles</mat-card-title>
   <mat-card-content>
 
-    <mat-form-field style="width: 300px;">
-      <textarea  matInput placeholder="Informations sur le déroulement du controle" matTextareaAutosize matAutosizeMinRows="4" [(ngModel)]="surplace.infos_complementaires"></textarea>
+    <mat-form-field style="width:300px">
+      <textarea  matInput placeholder="Informations sur le déroulement du controle" [(ngModel)]="surplace.infos_complementaires"></textarea>
     </mat-form-field>
-
-
-
 
   </mat-card-content>
 
@@ -344,7 +399,7 @@
               </span>
             </span>
             de Police Judiciaire en résidence à PARIS.---<br />
-            <span *ngIf="this.fonction_redacteur != 'Officier'">---Agissant conformément aux instructions reçues de Mme BERJOT Sandrine, Commandant de Police, Officier de Police Judiciaire territorialement compétent, Chef du Service de la Brigade Fluviale de Paris.---<br /></span>
+            <span *ngIf="this.fonction_redacteur != 'Officier'">---Agissant conformément aux instructions reçues de Mme XXXX XXXX, Commandant de Police, Officier de Police Judiciaire territorialement compétent, Chef du Service de la Brigade Fluviale de Paris.---<br /></span>
             ---<span [ngSwitch]="appel.appelant"><span *ngSwitchCase="'TNF'">Sommes requis par notre station directrice « TNF »</span><span *ngSwitchCase="'Requérant'">Un requérant nous informes </span><span *ngSwitchCase="'Pompiers'">Sommes contacté par les pompiers</span><span *ngSwitchCase="'VHF'">Sommes requis par notre radio « VHF »</span><span *ngSwitchCase="'Ronde'">Nous observons lors d'une ronde</span>
 
 
@@ -356,7 +411,7 @@
             </span>
           </span>
           ---Revêtus de nos tenues d’uniformes réglementaires et insignes apparents à notre fonction.---<br />
-          ---Nous transportons sur place à bord de la vedette « {{appel.nom_vedette | uppercase }} » où étant à {{ this.translate_heure(surplace.heure | date: 'HH') }} heures {{ this.translate_heure(surplace.heure | date: 'mm') }} minutes à {{surplace.lieu}}, sommes en présence de {{surplace.nb_baigneurs}} <span *ngIf="surplace.nb_baigneurs == 1; else condition_baigneurs3">individu mouillé</span> <ng-template #condition_baigneurs3><span>individus mouillés</span></ng-template>.---<br />
+          ---Nous transportons sur place à bord de la vedette <span *ngIf="appel.nom_vedette != 'Autre'">« {{appel.nom_vedette | uppercase }} »</span><span *ngIf="appel.nom_vedette == 'Autre'">« {{autre_nom_vedette | uppercase }} »</span> où étant à {{ this.translate_heure(surplace.heure | date: 'HH') }} heures {{ this.translate_heure(surplace.heure | date: 'mm') }} minutes à {{surplace.lieu}}, sommes en présence de {{surplace.nb_baigneurs}} <span *ngIf="surplace.nb_baigneurs == 1; else condition_baigneurs3">individu mouillé</span> <ng-template #condition_baigneurs3><span>individus mouillés</span></ng-template>.---<br />
           <span *ngIf= "surplace.infos_complementaires != '' ">---{{surplace.infos_complementaires}}--- <br /></span>
           <!--        <p>Mettons pied à terre et prenons contact avec   <span *ngIf="surplace.nb_baigneurs == 1; else condition_baigneurs2">l'individu qui nous déclare s'être jeté</span> <ng-template #condition_baigneurs2> <span> les individus qui nous déclarent s'être jetés</span></ng-template> à l’eau volontairement.</p>
           <p>Palpé, <span *ngIf="surplace.nb_baigneurs == 1; else condition_baigneurs4">l'individu n'est porteur d’aucun objet dangereux pour lui ou pour autrui</span> <ng-template #condition_baigneurs4> <span> les individus ne sont trouvés porteur d’aucun objet dangereux pour eux ou pour autrui</span></ng-template>.</p> -->
