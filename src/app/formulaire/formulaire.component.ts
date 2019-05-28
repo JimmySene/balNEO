@@ -87,6 +87,7 @@ export class FormulaireComponent implements OnInit {
     appelant : "TNF",
     heure : '',
     lieu : '',
+    cpt_lieu: '',
     nb_baigneurs : null,
     nom_vedette : ''
   };
@@ -94,6 +95,7 @@ export class FormulaireComponent implements OnInit {
   surplace :Surplace = {
     heure : '',
     lieu : '',
+    cpt_lieu: '',
     nb_baigneurs : null,
     infos_complementaires : ''
   };
@@ -117,10 +119,49 @@ export class FormulaireComponent implements OnInit {
   profession_interpel :string;
   recherche_interpel :string;
   infos_recherche :string;
+  
 
   autre_nom_vedette :string = '';
   id_pv : any;
   erreurs_envoi : string[] = [];
+
+  villes = [
+    {ville:'PARIS', cp:'75001'},
+    {ville:'PARIS', cp:'75002'},
+    {ville:'PARIS', cp:'75003'},
+    {ville:'PARIS', cp:'75004'},
+    {ville:'PARIS', cp:'75005'},
+    {ville:'PARIS', cp:'75006'},
+    {ville:'PARIS', cp:'75007'},
+    {ville:'PARIS', cp:'75008'},
+    {ville:'PARIS', cp:'75009'},
+    {ville:'PARIS', cp:'75010'},
+    {ville:'PARIS', cp:'75011'},
+    {ville:'PARIS', cp:'75012'},
+    {ville:'PARIS', cp:'75013'},
+    {ville:'PARIS', cp:'75014'},
+    {ville:'PARIS', cp:'75015'},
+    {ville:'PARIS', cp:'75016'},
+    {ville:'PARIS', cp:'75017'},
+    {ville:'PARIS', cp:'75018'},
+    {ville:'PARIS', cp:'75019'},
+    {ville:'PARIS', cp:'75020'},
+    {ville:'CLICHY', cp:'92110'},
+    {ville:'COLOMBES', cp:'92700'},
+    {ville:'COURBEVOIE', cp:'92400'},
+    {ville:'EPINAY-SUR-SEINE', cp:'93800'},
+    {ville:'GENNEVILLIERS', cp:'92230'},
+    {ville:'ISSY-LES-MOULINEAUX', cp:'92130'},
+    {ville:'LEVALLOIS-PERRET', cp:'92300'},
+    {ville:'L\'ILE-SAINT-DENIS', cp:'93450'},
+    {ville:'NANTERRE', cp:'92014'},
+    {ville:'NEUILLY-SUR-SEINE', cp:'92200'},
+    {ville:'PUTEAUX', cp:'92800'},
+    {ville:'SAINT-DENIS', cp:'93200'},
+    {ville:'SAINT-OUEN', cp:'93400'},
+    {ville:'SURNESNES', cp:'92150'},
+    {ville:'VILLENEUVE-LA-GARENNE', cp:'92390'}
+]
 
 
   envoi(apercu_pvblanc) {
